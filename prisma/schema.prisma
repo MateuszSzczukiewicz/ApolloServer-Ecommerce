@@ -8,51 +8,55 @@ datasource db {
 }
 
 model Product {
-    categories  Category[]
-    collections Collection[]
-    description String
     id          String         @id @default(cuid())
-    images      ProductImage[]
     name        String
+    description String
     price       Int
     rating      Float
+    slug        String         @unique
+    images      ProductImage[]
     reviews     Review[]
-    slug        String
+    categories  Category[]     @relation("ProductCategories")
+    collections Collection[]   @relation("ProductCollections")
+    createdAt   DateTime       @default(now())
+    updatedAt   DateTime       @updatedAt
 }
 
 model Category {
-    description String
     id          String    @id @default(cuid())
     name        String
-    products    Product[]
-    slug        String
+    description String
+    slug        String    @unique
+    products    Product[] @relation("ProductCategories")
 }
 
 model Collection {
-    description String
     id          String    @id @default(cuid())
     name        String
-    products    Product[]
-    slug        String
+    description String
+    slug        String    @unique
+    products    Product[] @relation("ProductCollections")
 }
 
 model ProductImage {
-    alt     String
-    height  Int
-    id      String   @id @default(cuid())
-    product Product? @relation(fields: [id], references: [id])
-    url     String
-    width   Int
+    id        String  @id @default(cuid())
+    url       String
+    alt       String
+    width     Int
+    height    Int
+    product   Product @relation(fields: [productId], references: [id])
+    productId String
 }
 
 model Review {
-    author      String
-    createdAt   DateTime
-    description String
-    email       String
     id          String   @id @default(cuid())
-    product     Product? @relation(fields: [id], references: [id])
+    author      String
+    email       String
     rating      Float
     title       String
-    updatedAt   DateTime
+    description String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    product     Product  @relation(fields: [productId], references: [id])
+    productId   String
 }
