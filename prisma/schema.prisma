@@ -1,10 +1,10 @@
-generator client {
-    provider = "prisma-client-js"
-}
-
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
 }
 
 model Product {
@@ -12,12 +12,12 @@ model Product {
     name        String
     description String
     price       Int
-    rating      Float
+    rating      Float?
     slug        String         @unique
     images      ProductImage[]
     reviews     Review[]
-    categories  Category[]     @relation("ProductCategories")
-    collections Collection[]   @relation("ProductCollections")
+    categories  Category[]
+    collections Collection[]
     createdAt   DateTime       @default(now())
     updatedAt   DateTime       @updatedAt
 }
@@ -27,7 +27,7 @@ model Category {
     name        String
     description String
     slug        String    @unique
-    products    Product[] @relation("ProductCategories")
+    products    Product[]
 }
 
 model Collection {
@@ -35,7 +35,7 @@ model Collection {
     name        String
     description String
     slug        String    @unique
-    products    Product[] @relation("ProductCollections")
+    products    Product[]
 }
 
 model ProductImage {
@@ -44,8 +44,8 @@ model ProductImage {
     alt       String
     width     Int
     height    Int
-    product   Product @relation(fields: [productId], references: [id])
     productId String
+    product   Product @relation(fields: [productId], references: [id])
 }
 
 model Review {
@@ -57,6 +57,6 @@ model Review {
     description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    product     Product  @relation(fields: [productId], references: [id])
     productId   String
+    product     Product  @relation(fields: [productId], references: [id])
 }

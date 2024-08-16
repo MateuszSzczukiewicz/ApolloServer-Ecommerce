@@ -13,6 +13,9 @@ const config = {
 				ID: {
 					type: "string",
 				},
+				DateTime: {
+					type: "Date",
+				},
 			},
 		}),
 	},
