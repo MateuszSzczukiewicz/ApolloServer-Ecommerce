@@ -1,12 +1,55 @@
-type Product {
+type Category {
 	description: String!
 	id: ID!
-	images: [String!]!
 	name: String!
-	price: Float!
+	products: [Product!]!
+	slug: String!
+}
+
+type Collection {
+	description: String!
+	id: ID!
+	name: String!
+	products: [Product!]!
+	slug: String!
+}
+
+scalar DateTime
+
+type Product {
+	categories: [Category!]!
+	collections: [Collection!]!
+	createdAt: DateTime!
+	description: String!
+	id: ID!
+	images: [ProductImage!]!
+	name: String!
+	price: Int!
+	rating: Float
+	reviews: [Review!]!
+	slug: String!
+	updatedAt: DateTime!
+}
+
+type ProductImage {
+	alt: String!
+	height: Int!
+	id: ID!
+	url: String!
+	width: Int!
 }
 
 type Query {
-	product(id: ID!): Product
-	products: [Product!]!
+	product(id: ID, slug: String): Product
+}
+
+type Review {
+	author: String!
+	createdAt: DateTime!
+	description: String!
+	email: String!
+	id: ID!
+	rating: Float!
+	title: String!
+	updatedAt: DateTime!
 }
