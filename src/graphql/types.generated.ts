@@ -59,6 +59,8 @@ export type ProductImage = {
 	alt: Scalars["String"]["output"];
 	height: Scalars["Int"]["output"];
 	id: Scalars["ID"]["output"];
+	product: Product;
+	productId: Scalars["ID"]["output"];
 	url: Scalars["String"]["output"];
 	width: Scalars["Int"]["output"];
 };
@@ -80,6 +82,8 @@ export type Review = {
 	description: Scalars["String"]["output"];
 	email: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
+	product: Product;
+	productId: Scalars["ID"]["output"];
 	rating: Scalars["Float"]["output"];
 	title: Scalars["String"]["output"];
 	updatedAt: Scalars["DateTime"]["output"];
@@ -254,6 +258,8 @@ export type ProductImageResolvers<
 	alt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	height?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	productId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	url?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	width?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -280,6 +286,8 @@ export type ReviewResolvers<
 	description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	productId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	rating?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
 	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;

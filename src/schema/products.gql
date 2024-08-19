@@ -41,6 +41,8 @@ type ProductImage {
 	alt: String!
 	width: Int!
 	height: Int!
+	product: Product!
+	productId: ID!
 }
 
 type Review {
@@ -52,4 +54,6 @@ type Review {
 	description: String!
 	createdAt: DateTime!
 	updatedAt: DateTime!
+	product: Product!
+	productId: ID!
 }

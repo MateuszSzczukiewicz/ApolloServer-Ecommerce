@@ -3,7 +3,7 @@ import { defineConfig } from "@eddeee888/gcg-typescript-resolver-files";
 
 const config = {
 	overwrite: true,
-	schema: "./src/schema/**/*.graphql",
+	schema: "./src/schema/**/*.{gql,graphql}",
 	generates: {
 		"src/graphql/": defineConfig({
 			typesPluginsConfig: {

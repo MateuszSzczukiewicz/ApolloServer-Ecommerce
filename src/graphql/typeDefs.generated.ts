@@ -364,6 +364,26 @@ export const typeDefs = {
 					},
 					directives: [],
 				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "product" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "productId" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
 			],
 		},
 		{
@@ -449,6 +469,26 @@ export const typeDefs = {
 					type: {
 						kind: "NonNullType",
 						type: { kind: "NamedType", name: { kind: "Name", value: "DateTime" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "product" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "productId" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
 					},
 					directives: [],
 				},

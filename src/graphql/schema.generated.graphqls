@@ -35,6 +35,8 @@ type ProductImage {
 	alt: String!
 	height: Int!
 	id: ID!
+	product: Product!
+	productId: ID!
 	url: String!
 	width: Int!
 }
@@ -49,6 +51,8 @@ type Review {
 	description: String!
 	email: String!
 	id: ID!
+	product: Product!
+	productId: ID!
 	rating: Float!
 	title: String!
 	updatedAt: DateTime!
