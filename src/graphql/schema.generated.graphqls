@@ -1,3 +1,13 @@
+type Cart {
+	id: ID!
+	items: [CartItem!]!
+}
+
+type CartItem {
+	product: Product!
+	quantity: Int!
+}
+
 type Category {
 	description: String!
 	id: ID!
@@ -69,6 +79,7 @@ enum ProductSortBy {
 }
 
 type Query {
+	cart(id: ID!): Cart
 	categories(skip: Int! = 0, take: Int! = 10): CategoryList!
 	category(id: ID, slug: String): Category
 	collection(id: ID, slug: String): Collection

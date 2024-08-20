@@ -4,11 +4,14 @@ import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 
 async function main() {
+	await prisma.cartItem.deleteMany({});
+	await prisma.cart.deleteMany({});
+	await prisma.review.deleteMany({});
+	await prisma.productImage.deleteMany({});
+
 	await prisma.product.deleteMany({});
 	await prisma.collection.deleteMany({});
 	await prisma.category.deleteMany({});
-	await prisma.productImage.deleteMany({});
-	await prisma.review.deleteMany({});
 
 	const productsCount = 14;
 	const collectionsCount = 3;
@@ -43,6 +46,7 @@ async function main() {
 		console.log(`Created category with id: ${createdCategory.id}`);
 	}
 
+	const products = [];
 	for (let i = 0; i < productsCount; i++) {
 		const name = faker.commerce.productName();
 		const price = faker.number.int({ min: 100, max: 1000 });
@@ -70,6 +74,7 @@ async function main() {
 			},
 		});
 
+		products.push(createdProduct);
 		console.log(`Created product with id: ${createdProduct.id}`);
 
 		for (let j = 0; j < 3; j++) {
@@ -98,6 +103,30 @@ async function main() {
 			});
 			console.log(
 				`Created review with id: ${createdReview.id} for product id: ${createdProduct.id}`,
+			);
+		}
+	}
+
+	for (let i = 0; i < 5; i++) {
+		const createdCart = await prisma.cart.create({
+			data: {},
+		});
+		console.log(`Created cart with id: ${createdCart.id}`);
+
+		for (let j = 0; j < 3; j++) {
+			const productIndex = faker.number.int({ min: 0, max: products.length - 1 });
+			const quantity = faker.number.int({ min: 1, max: 5 });
+
+			const createdCartItem = await prisma.cartItem.create({
+				data: {
+					productId: products[productIndex].id,
+					quantity,
+					cartId: createdCart.id,
+				},
+			});
+
+			console.log(
+				`Created cart item with id: ${createdCartItem.id} for cart id: ${createdCart.id} and product id: ${createdCartItem.productId}`,
 			);
 		}
 	}

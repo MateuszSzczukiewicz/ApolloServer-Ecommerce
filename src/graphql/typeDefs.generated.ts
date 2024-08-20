@@ -8,6 +8,23 @@ export const typeDefs = {
 			fields: [
 				{
 					kind: "FieldDefinition",
+					name: { kind: "Name", value: "cart" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "id" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+							},
+							directives: [],
+						},
+					],
+					type: { kind: "NamedType", name: { kind: "Name", value: "Cart" } },
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
 					name: { kind: "Name", value: "categories" },
 					arguments: [
 						{
@@ -191,6 +208,68 @@ export const typeDefs = {
 			],
 			directives: [],
 			interfaces: [],
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Cart" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "items" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "CartItem" } },
+							},
+						},
+					},
+					directives: [],
+				},
+			],
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "CartItem" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "product" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "quantity" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+					},
+					directives: [],
+				},
+			],
 		},
 		{
 			name: { kind: "Name", value: "Category" },

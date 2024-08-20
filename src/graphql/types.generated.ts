@@ -22,6 +22,18 @@ export type Scalars = {
 	DateTime: { input: Date; output: Date };
 };
 
+export type Cart = {
+	__typename?: "Cart";
+	id: Scalars["ID"]["output"];
+	items: Array<CartItem>;
+};
+
+export type CartItem = {
+	__typename?: "CartItem";
+	product: Product;
+	quantity: Scalars["Int"]["output"];
+};
+
 export type Category = {
 	__typename?: "Category";
 	description: Scalars["String"]["output"];
@@ -95,12 +107,17 @@ export type ProductSortBy = "DEFAULT" | "NAME" | "PRICE" | "RATING";
 
 export type Query = {
 	__typename?: "Query";
+	cart?: Maybe<Cart>;
 	categories: CategoryList;
 	category?: Maybe<Category>;
 	collection?: Maybe<Collection>;
 	collections: CollectionList;
 	product: Product;
 	products: ProductList;
+};
+
+export type QuerycartArgs = {
+	id: Scalars["ID"]["input"];
 };
 
 export type QuerycategoriesArgs = {
@@ -236,15 +253,17 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+	Cart: ResolverTypeWrapper<Cart>;
+	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
+	CartItem: ResolverTypeWrapper<CartItem>;
+	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
 	Category: ResolverTypeWrapper<Category>;
 	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
-	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
 	CategoryList: ResolverTypeWrapper<CategoryList>;
 	Collection: ResolverTypeWrapper<Collection>;
 	CollectionList: ResolverTypeWrapper<CollectionList>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
-	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
 	Product: ResolverTypeWrapper<Product>;
 	Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
 	ProductImage: ResolverTypeWrapper<ProductImage>;
@@ -258,15 +277,17 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+	Cart: Cart;
+	ID: Scalars["ID"]["output"];
+	CartItem: CartItem;
+	Int: Scalars["Int"]["output"];
 	Category: Category;
 	String: Scalars["String"]["output"];
-	ID: Scalars["ID"]["output"];
 	CategoryList: CategoryList;
 	Collection: Collection;
 	CollectionList: CollectionList;
 	DateTime: Scalars["DateTime"]["output"];
 	ListMeta: ListMeta;
-	Int: Scalars["Int"]["output"];
 	Product: Product;
 	Float: Scalars["Float"]["output"];
 	ProductImage: ProductImage;
@@ -274,6 +295,24 @@ export type ResolversParentTypes = {
 	Query: {};
 	Review: Review;
 	Boolean: Scalars["Boolean"]["output"];
+};
+
+export type CartResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Cart"] = ResolversParentTypes["Cart"],
+> = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	items?: Resolver<Array<ResolversTypes["CartItem"]>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CartItemResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["CartItem"] = ResolversParentTypes["CartItem"],
+> = {
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	quantity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CategoryResolvers<
@@ -384,6 +423,12 @@ export type QueryResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+	cart?: Resolver<
+		Maybe<ResolversTypes["Cart"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QuerycartArgs, "id">
+	>;
 	categories?: Resolver<
 		ResolversTypes["CategoryList"],
 		ParentType,
@@ -440,6 +485,8 @@ export type SortDirectionResolvers = EnumResolverSignature<
 >;
 
 export type Resolvers<ContextType = any> = {
+	Cart?: CartResolvers<ContextType>;
+	CartItem?: CartItemResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	CategoryList?: CategoryListResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;

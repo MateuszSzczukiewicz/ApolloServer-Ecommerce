@@ -1,11 +1,14 @@
 /* This file was automatically generated. DO NOT UPDATE MANUALLY. */
 import type { Resolvers } from "./types.generated";
+import { cart as Query_cart } from "./../schema/resolvers/Query/cart";
 import { categories as Query_categories } from "./../schema/resolvers/Query/categories";
 import { category as Query_category } from "./../schema/resolvers/Query/category";
 import { collection as Query_collection } from "./../schema/resolvers/Query/collection";
 import { collections as Query_collections } from "./../schema/resolvers/Query/collections";
 import { product as Query_product } from "./../schema/resolvers/Query/product";
 import { products as Query_products } from "./../schema/resolvers/Query/products";
+import { Cart } from "./../schema/resolvers/Cart";
+import { CartItem } from "./../schema/resolvers/CartItem";
 import { Category } from "./../schema/resolvers/Category";
 import { CategoryList } from "./../schema/resolvers/CategoryList";
 import { Collection } from "./../schema/resolvers/Collection";
@@ -18,6 +21,7 @@ import { Review } from "./../schema/resolvers/Review";
 import { DateTimeResolver } from "graphql-scalars";
 export const resolvers: Resolvers = {
 	Query: {
+		cart: Query_cart,
 		categories: Query_categories,
 		category: Query_category,
 		collection: Query_collection,
@@ -26,6 +30,8 @@ export const resolvers: Resolvers = {
 		products: Query_products,
 	},
 
+	Cart: Cart,
+	CartItem: CartItem,
 	Category: Category,
 	CategoryList: CategoryList,
 	Collection: Collection,
