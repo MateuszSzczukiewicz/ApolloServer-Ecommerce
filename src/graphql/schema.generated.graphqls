@@ -70,6 +70,7 @@ enum ProductSortBy {
 
 type Query {
 	categories(skip: Int! = 0, take: Int! = 10): CategoryList!
+	collection(id: ID, slug: String): Collection
 	collections(skip: Int! = 0, take: Int! = 10): CollectionList!
 	product(id: ID, slug: String): Product!
 	products(

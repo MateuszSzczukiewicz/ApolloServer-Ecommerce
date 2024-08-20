@@ -96,6 +96,7 @@ export type ProductSortBy = "DEFAULT" | "NAME" | "PRICE" | "RATING";
 export type Query = {
 	__typename?: "Query";
 	categories: CategoryList;
+	collection?: Maybe<Collection>;
 	collections: CollectionList;
 	product: Product;
 	products: ProductList;
@@ -104,6 +105,11 @@ export type Query = {
 export type QuerycategoriesArgs = {
 	skip?: Scalars["Int"]["input"];
 	take?: Scalars["Int"]["input"];
+};
+
+export type QuerycollectionArgs = {
+	id?: InputMaybe<Scalars["ID"]["input"]>;
+	slug?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QuerycollectionsArgs = {
@@ -377,6 +383,12 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QuerycategoriesArgs, "skip" | "take">
+	>;
+	collection?: Resolver<
+		Maybe<ResolversTypes["Collection"]>,
+		ParentType,
+		ContextType,
+		Partial<QuerycollectionArgs>
 	>;
 	collections?: Resolver<
 		ResolversTypes["CollectionList"],
