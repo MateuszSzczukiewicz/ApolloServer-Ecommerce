@@ -31,6 +31,12 @@ export type Category = {
 	slug: Scalars["String"]["output"];
 };
 
+export type CategoryList = {
+	__typename?: "CategoryList";
+	data: Array<Category>;
+	meta: ListMeta;
+};
+
 export type Collection = {
 	__typename?: "Collection";
 	description: Scalars["String"]["output"];
@@ -38,6 +44,12 @@ export type Collection = {
 	name: Scalars["String"]["output"];
 	products: Array<Product>;
 	slug: Scalars["String"]["output"];
+};
+
+export type CollectionList = {
+	__typename?: "CollectionList";
+	data: Array<Collection>;
+	meta: ListMeta;
 };
 
 export type ListMeta = {
@@ -83,8 +95,20 @@ export type ProductSortBy = "DEFAULT" | "NAME" | "PRICE" | "RATING";
 
 export type Query = {
 	__typename?: "Query";
+	categories: CategoryList;
+	collections: CollectionList;
 	product: Product;
 	products: ProductList;
+};
+
+export type QuerycategoriesArgs = {
+	skip?: Scalars["Int"]["input"];
+	take?: Scalars["Int"]["input"];
+};
+
+export type QuerycollectionsArgs = {
+	skip?: Scalars["Int"]["input"];
+	take?: Scalars["Int"]["input"];
 };
 
 export type QueryproductArgs = {
@@ -203,7 +227,9 @@ export type ResolversTypes = {
 	Category: ResolverTypeWrapper<Category>;
 	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
 	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
+	CategoryList: ResolverTypeWrapper<CategoryList>;
 	Collection: ResolverTypeWrapper<Collection>;
+	CollectionList: ResolverTypeWrapper<CollectionList>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
 	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
@@ -223,7 +249,9 @@ export type ResolversParentTypes = {
 	Category: Category;
 	String: Scalars["String"]["output"];
 	ID: Scalars["ID"]["output"];
+	CategoryList: CategoryList;
 	Collection: Collection;
+	CollectionList: CollectionList;
 	DateTime: Scalars["DateTime"]["output"];
 	ListMeta: ListMeta;
 	Int: Scalars["Int"]["output"];
@@ -248,6 +276,15 @@ export type CategoryResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CategoryListResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["CategoryList"] = ResolversParentTypes["CategoryList"],
+> = {
+	data?: Resolver<Array<ResolversTypes["Category"]>, ParentType, ContextType>;
+	meta?: Resolver<ResolversTypes["ListMeta"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CollectionResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Collection"] = ResolversParentTypes["Collection"],
@@ -257,6 +294,16 @@ export type CollectionResolvers<
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	products?: Resolver<Array<ResolversTypes["Product"]>, ParentType, ContextType>;
 	slug?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CollectionListResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes["CollectionList"] = ResolversParentTypes["CollectionList"],
+> = {
+	data?: Resolver<Array<ResolversTypes["Collection"]>, ParentType, ContextType>;
+	meta?: Resolver<ResolversTypes["ListMeta"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -325,6 +372,18 @@ export type QueryResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+	categories?: Resolver<
+		ResolversTypes["CategoryList"],
+		ParentType,
+		ContextType,
+		RequireFields<QuerycategoriesArgs, "skip" | "take">
+	>;
+	collections?: Resolver<
+		ResolversTypes["CollectionList"],
+		ParentType,
+		ContextType,
+		RequireFields<QuerycollectionsArgs, "skip" | "take">
+	>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
 	products?: Resolver<
 		ResolversTypes["ProductList"],
@@ -358,7 +417,9 @@ export type SortDirectionResolvers = EnumResolverSignature<
 
 export type Resolvers<ContextType = any> = {
 	Category?: CategoryResolvers<ContextType>;
+	CategoryList?: CategoryListResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
+	CollectionList?: CollectionListResolvers<ContextType>;
 	DateTime?: GraphQLScalarType;
 	ListMeta?: ListMetaResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;

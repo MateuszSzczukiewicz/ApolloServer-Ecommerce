@@ -2,11 +2,72 @@ import type { DocumentNode } from "graphql";
 export const typeDefs = {
 	kind: "Document",
 	definitions: [
-		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "DateTime" }, directives: [] },
 		{
 			name: { kind: "Name", value: "Query" },
 			kind: "ObjectTypeDefinition",
 			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "categories" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "skip" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "0" },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "take" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "10" },
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "CategoryList" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "collections" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "skip" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "0" },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "take" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "10" },
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "CollectionList" } },
+					},
+					directives: [],
+				},
 				{
 					kind: "FieldDefinition",
 					name: { kind: "Name", value: "product" },
@@ -91,6 +152,231 @@ export const typeDefs = {
 			directives: [],
 			interfaces: [],
 		},
+		{
+			name: { kind: "Name", value: "Category" },
+			kind: "ObjectTypeDefinition",
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "description" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "slug" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "products" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
+							},
+						},
+					},
+					directives: [],
+				},
+			],
+			directives: [],
+			interfaces: [],
+		},
+		{
+			name: { kind: "Name", value: "ListMeta" },
+			kind: "ObjectTypeDefinition",
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "count" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "total" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+					},
+					directives: [],
+				},
+			],
+			directives: [],
+			interfaces: [],
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "CategoryList" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "data" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Category" } },
+							},
+						},
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "meta" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ListMeta" } },
+					},
+					directives: [],
+				},
+			],
+		},
+		{
+			name: { kind: "Name", value: "Collection" },
+			kind: "ObjectTypeDefinition",
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "description" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "slug" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "products" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
+							},
+						},
+					},
+					directives: [],
+				},
+			],
+			directives: [],
+			interfaces: [],
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "CollectionList" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "data" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Collection" } },
+							},
+						},
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "meta" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ListMeta" } },
+					},
+					directives: [],
+				},
+			],
+		},
+		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "DateTime" }, directives: [] },
 		{
 			kind: "ObjectTypeDefinition",
 			name: { kind: "Name", value: "Product" },
@@ -235,134 +521,6 @@ export const typeDefs = {
 					type: {
 						kind: "NonNullType",
 						type: { kind: "NamedType", name: { kind: "Name", value: "DateTime" } },
-					},
-					directives: [],
-				},
-			],
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Category" },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "description" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "slug" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "products" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "ListType",
-							type: {
-								kind: "NonNullType",
-								type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
-							},
-						},
-					},
-					directives: [],
-				},
-			],
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Collection" },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "description" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "slug" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "products" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "ListType",
-							type: {
-								kind: "NonNullType",
-								type: { kind: "NamedType", name: { kind: "Name", value: "Product" } },
-							},
-						},
 					},
 					directives: [],
 				},
@@ -572,34 +730,6 @@ export const typeDefs = {
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "NAME" }, directives: [] },
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "PRICE" }, directives: [] },
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "RATING" }, directives: [] },
-			],
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "ListMeta" },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "count" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-					},
-					directives: [],
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "total" },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-					},
-					directives: [],
-				},
 			],
 		},
 		{

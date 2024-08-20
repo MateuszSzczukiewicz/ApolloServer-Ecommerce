@@ -6,12 +6,22 @@ type Category {
 	slug: String!
 }
 
+type CategoryList {
+	data: [Category!]!
+	meta: ListMeta!
+}
+
 type Collection {
 	description: String!
 	id: ID!
 	name: String!
 	products: [Product!]!
 	slug: String!
+}
+
+type CollectionList {
+	data: [Collection!]!
+	meta: ListMeta!
 }
 
 scalar DateTime
@@ -59,6 +69,8 @@ enum ProductSortBy {
 }
 
 type Query {
+	categories(skip: Int! = 0, take: Int! = 10): CategoryList!
+	collections(skip: Int! = 0, take: Int! = 10): CollectionList!
 	product(id: ID, slug: String): Product!
 	products(
 		order: SortDirection! = ASC

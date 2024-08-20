@@ -1,0 +1,21 @@
+extend type Query {
+	collections(skip: Int! = 0, take: Int! = 10): CollectionList!
+}
+
+type Collection {
+	id: ID!
+	name: String!
+	description: String!
+	slug: String!
+	products: [Product!]!
+}
+
+type ListMeta {
+	count: Int!
+	total: Int!
+}
+
+type CollectionList {
+	data: [Collection!]!
+	meta: ListMeta!
+}
