@@ -1,0 +1,59 @@
+scalar DateTime
+
+extend type Query {
+	product(id: ID, slug: String): Product!
+}
+
+type Product {
+	id: ID!
+	name: String!
+	description: String!
+	price: Int!
+	rating: Float
+	slug: String!
+	images: [ProductImage!]!
+	reviews: [Review!]!
+	categories: [Category!]!
+	collections: [Collection!]!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+type Category {
+	id: ID!
+	name: String!
+	description: String!
+	slug: String!
+	products: [Product!]!
+}
+
+type Collection {
+	id: ID!
+	name: String!
+	description: String!
+	slug: String!
+	products: [Product!]!
+}
+
+type ProductImage {
+	id: ID!
+	url: String!
+	alt: String!
+	width: Int!
+	height: Int!
+	product: Product!
+	productId: ID!
+}
+
+type Review {
+	id: ID!
+	author: String!
+	email: String!
+	rating: Float!
+	title: String!
+	description: String!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	product: Product!
+	productId: ID!
+}

@@ -1,59 +1,31 @@
-scalar DateTime
-
 extend type Query {
-	product(id: ID, slug: String): Product
+	products(
+		order: SortDirection! = ASC
+		orderBy: ProductSortBy! = DEFAULT
+		search: String
+		skip: Int! = 0
+		take: Int! = 10
+	): ProductList!
 }
 
-type Product {
-	id: ID!
-	name: String!
-	description: String!
-	price: Int!
-	rating: Float
-	slug: String!
-	images: [ProductImage!]!
-	reviews: [Review!]!
-	categories: [Category!]!
-	collections: [Collection!]!
-	createdAt: DateTime!
-	updatedAt: DateTime!
+enum SortDirection {
+	ASC
+	DESC
 }
 
-type Category {
-	id: ID!
-	name: String!
-	description: String!
-	slug: String!
-	products: [Product!]!
+enum ProductSortBy {
+	DEFAULT
+	NAME
+	PRICE
+	RATING
 }
 
-type Collection {
-	id: ID!
-	name: String!
-	description: String!
-	slug: String!
-	products: [Product!]!
+type ListMeta {
+	count: Int!
+	total: Int!
 }
 
-type ProductImage {
-	id: ID!
-	url: String!
-	alt: String!
-	width: Int!
-	height: Int!
-	product: Product!
-	productId: ID!
-}
-
-type Review {
-	id: ID!
-	author: String!
-	email: String!
-	rating: Float!
-	title: String!
-	description: String!
-	createdAt: DateTime!
-	updatedAt: DateTime!
-	product: Product!
-	productId: ID!
+type ProductList {
+	data: [Product!]!
+	meta: ListMeta!
 }

@@ -16,6 +16,11 @@ type Collection {
 
 scalar DateTime
 
+type ListMeta {
+	count: Int!
+	total: Int!
+}
+
 type Product {
 	categories: [Category!]!
 	collections: [Collection!]!
@@ -41,8 +46,27 @@ type ProductImage {
 	width: Int!
 }
 
+type ProductList {
+	data: [Product!]!
+	meta: ListMeta!
+}
+
+enum ProductSortBy {
+	DEFAULT
+	NAME
+	PRICE
+	RATING
+}
+
 type Query {
-	product(id: ID, slug: String): Product
+	product(id: ID, slug: String): Product!
+	products(
+		order: SortDirection! = ASC
+		orderBy: ProductSortBy! = DEFAULT
+		search: String
+		skip: Int! = 0
+		take: Int! = 10
+	): ProductList!
 }
 
 type Review {
@@ -56,4 +80,9 @@ type Review {
 	rating: Float!
 	title: String!
 	updatedAt: DateTime!
+}
+
+enum SortDirection {
+	ASC
+	DESC
 }

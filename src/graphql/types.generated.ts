@@ -10,6 +10,8 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> =
 	| T
 	| { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
 	ID: { input: string; output: string };
@@ -36,6 +38,12 @@ export type Collection = {
 	name: Scalars["String"]["output"];
 	products: Array<Product>;
 	slug: Scalars["String"]["output"];
+};
+
+export type ListMeta = {
+	__typename?: "ListMeta";
+	count: Scalars["Int"]["output"];
+	total: Scalars["Int"]["output"];
 };
 
 export type Product = {
@@ -65,14 +73,31 @@ export type ProductImage = {
 	width: Scalars["Int"]["output"];
 };
 
+export type ProductList = {
+	__typename?: "ProductList";
+	data: Array<Product>;
+	meta: ListMeta;
+};
+
+export type ProductSortBy = "DEFAULT" | "NAME" | "PRICE" | "RATING";
+
 export type Query = {
 	__typename?: "Query";
-	product?: Maybe<Product>;
+	product: Product;
+	products: ProductList;
 };
 
 export type QueryproductArgs = {
 	id?: InputMaybe<Scalars["ID"]["input"]>;
 	slug?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type QueryproductsArgs = {
+	order?: SortDirection;
+	orderBy?: ProductSortBy;
+	search?: InputMaybe<Scalars["String"]["input"]>;
+	skip?: Scalars["Int"]["input"];
+	take?: Scalars["Int"]["input"];
 };
 
 export type Review = {
@@ -88,6 +113,8 @@ export type Review = {
 	title: Scalars["String"]["output"];
 	updatedAt: Scalars["DateTime"]["output"];
 };
+
+export type SortDirection = "ASC" | "DESC";
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -178,12 +205,16 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
 	Collection: ResolverTypeWrapper<Collection>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
-	Product: ResolverTypeWrapper<Product>;
+	ListMeta: ResolverTypeWrapper<ListMeta>;
 	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
+	Product: ResolverTypeWrapper<Product>;
 	Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
 	ProductImage: ResolverTypeWrapper<ProductImage>;
+	ProductList: ResolverTypeWrapper<ProductList>;
+	ProductSortBy: ResolverTypeWrapper<"DEFAULT" | "NAME" | "PRICE" | "RATING">;
 	Query: ResolverTypeWrapper<{}>;
 	Review: ResolverTypeWrapper<Review>;
+	SortDirection: ResolverTypeWrapper<"ASC" | "DESC">;
 	Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
 };
 
@@ -194,10 +225,12 @@ export type ResolversParentTypes = {
 	ID: Scalars["ID"]["output"];
 	Collection: Collection;
 	DateTime: Scalars["DateTime"]["output"];
-	Product: Product;
+	ListMeta: ListMeta;
 	Int: Scalars["Int"]["output"];
+	Product: Product;
 	Float: Scalars["Float"]["output"];
 	ProductImage: ProductImage;
+	ProductList: ProductList;
 	Query: {};
 	Review: Review;
 	Boolean: Scalars["Boolean"]["output"];
@@ -232,6 +265,15 @@ export interface DateTimeScalarConfig
 	name: "DateTime";
 }
 
+export type ListMetaResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["ListMeta"] = ResolversParentTypes["ListMeta"],
+> = {
+	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	total?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProductResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
@@ -265,15 +307,30 @@ export type ProductImageResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ProductListResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["ProductList"] = ResolversParentTypes["ProductList"],
+> = {
+	data?: Resolver<Array<ResolversTypes["Product"]>, ParentType, ContextType>;
+	meta?: Resolver<ResolversTypes["ListMeta"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductSortByResolvers = EnumResolverSignature<
+	{ DEFAULT?: any; NAME?: any; PRICE?: any; RATING?: any },
+	ResolversTypes["ProductSortBy"]
+>;
+
 export type QueryResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
-	product?: Resolver<
-		Maybe<ResolversTypes["Product"]>,
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
+	products?: Resolver<
+		ResolversTypes["ProductList"],
 		ParentType,
 		ContextType,
-		Partial<QueryproductArgs>
+		RequireFields<QueryproductsArgs, "order" | "orderBy" | "skip" | "take">
 	>;
 };
 
@@ -294,12 +351,21 @@ export type ReviewResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SortDirectionResolvers = EnumResolverSignature<
+	{ ASC?: any; DESC?: any },
+	ResolversTypes["SortDirection"]
+>;
+
 export type Resolvers<ContextType = any> = {
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
 	DateTime?: GraphQLScalarType;
+	ListMeta?: ListMetaResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	ProductImage?: ProductImageResolvers<ContextType>;
+	ProductList?: ProductListResolvers<ContextType>;
+	ProductSortBy?: ProductSortByResolvers;
 	Query?: QueryResolvers<ContextType>;
 	Review?: ReviewResolvers<ContextType>;
+	SortDirection?: SortDirectionResolvers;
 };
