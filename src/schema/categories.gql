@@ -1,0 +1,21 @@
+extend type Query {
+	categories(skip: Int! = 0, take: Int! = 10): CategoryList!
+}
+
+type Category {
+	id: ID!
+	name: String!
+	description: String!
+	slug: String!
+	products: [Product!]!
+}
+
+type ListMeta {
+	count: Int!
+	total: Int!
+}
+
+type CategoryList {
+	data: [Category!]!
+	meta: ListMeta!
+}

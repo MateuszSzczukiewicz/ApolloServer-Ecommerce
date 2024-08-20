@@ -12,6 +12,7 @@ export const Category: CategoryResolvers = {
 				},
 			},
 		});
+
 		return products as Product[];
 	},
 	description: (parent) => parent.description,
