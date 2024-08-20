@@ -1,6 +1,7 @@
 /* This file was automatically generated. DO NOT UPDATE MANUALLY. */
 import type { Resolvers } from "./types.generated";
 import { categories as Query_categories } from "./../schema/resolvers/Query/categories";
+import { category as Query_category } from "./../schema/resolvers/Query/category";
 import { collection as Query_collection } from "./../schema/resolvers/Query/collection";
 import { collections as Query_collections } from "./../schema/resolvers/Query/collections";
 import { product as Query_product } from "./../schema/resolvers/Query/product";
@@ -18,6 +19,7 @@ import { DateTimeResolver } from "graphql-scalars";
 export const resolvers: Resolvers = {
 	Query: {
 		categories: Query_categories,
+		category: Query_category,
 		collection: Query_collection,
 		collections: Query_collections,
 		product: Query_product,
