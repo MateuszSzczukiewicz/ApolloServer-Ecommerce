@@ -81,12 +81,29 @@ export type ListMeta = {
 
 export type Mutation = {
 	__typename?: "Mutation";
+	cartAddItem: Cart;
 	cartFindOrCreate: Cart;
+	cartRemoveItem: Cart;
+};
+
+export type MutationcartAddItemArgs = {
+	id: Scalars["ID"]["input"];
+	input: MutationCartAddItemInput;
 };
 
 export type MutationcartFindOrCreateArgs = {
 	id?: InputMaybe<Scalars["ID"]["input"]>;
 	input: MutationCartFindOrCreateInput;
+};
+
+export type MutationcartRemoveItemArgs = {
+	id: Scalars["ID"]["input"];
+	productId: Scalars["ID"]["input"];
+};
+
+export type MutationCartAddItemInput = {
+	productId: Scalars["String"]["input"];
+	quantity?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type MutationCartFindOrCreateInput = {
@@ -324,6 +341,7 @@ export type ResolversTypes = {
 	JSON: ResolverTypeWrapper<Scalars["JSON"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
 	Mutation: ResolverTypeWrapper<{}>;
+	MutationCartAddItemInput: MutationCartAddItemInput;
 	MutationCartFindOrCreateInput: MutationCartFindOrCreateInput;
 	Order: ResolverTypeWrapper<Omit<Order, "status"> & { status: ResolversTypes["OrderStatus"] }>;
 	OrderList: ResolverTypeWrapper<
@@ -358,6 +376,7 @@ export type ResolversParentTypes = {
 	JSON: Scalars["JSON"]["output"];
 	ListMeta: ListMeta;
 	Mutation: {};
+	MutationCartAddItemInput: MutationCartAddItemInput;
 	MutationCartFindOrCreateInput: MutationCartFindOrCreateInput;
 	Order: Order;
 	OrderList: Omit<OrderList, "data"> & { data: Array<ResolversParentTypes["Order"]> };
@@ -455,11 +474,23 @@ export type MutationResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
+	cartAddItem?: Resolver<
+		ResolversTypes["Cart"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcartAddItemArgs, "id" | "input">
+	>;
 	cartFindOrCreate?: Resolver<
 		ResolversTypes["Cart"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcartFindOrCreateArgs, "input">
+	>;
+	cartRemoveItem?: Resolver<
+		ResolversTypes["Cart"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcartRemoveItemArgs, "id" | "productId">
 	>;
 };
 

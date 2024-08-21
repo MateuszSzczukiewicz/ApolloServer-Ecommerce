@@ -51,7 +51,14 @@ type ListMeta {
 }
 
 type Mutation {
+	cartAddItem(id: ID!, input: MutationCartAddItemInput!): Cart!
 	cartFindOrCreate(id: ID, input: MutationCartFindOrCreateInput!): Cart!
+	cartRemoveItem(id: ID!, productId: ID!): Cart!
+}
+
+input MutationCartAddItemInput {
+	productId: String!
+	quantity: Int = 1
 }
 
 input MutationCartFindOrCreateInput {

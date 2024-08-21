@@ -25,15 +25,6 @@ type ListMeta {
 	total: Int!
 }
 
-type Order {
-	id: ID!
-	createdAt: DateTime!
-	updatedAt: DateTime!
-	status: OrderStatus!
-	totalAmount: Int!
-	lines: JSON!
-}
-
 type OrderList {
 	data: [Order!]!
 	meta: ListMeta!
