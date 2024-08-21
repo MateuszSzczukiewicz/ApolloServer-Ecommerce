@@ -1,0 +1,8 @@
+type Mutation {
+	cartAddItem(id: ID!, input: MutationCartAddItemInput!): Cart!
+}
+
+input MutationCartAddItemInput {
+	productId: String!
+	quantity: Int = 1
+}
