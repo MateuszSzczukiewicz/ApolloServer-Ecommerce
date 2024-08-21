@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
+import { prisma } from "@/db";
 
-const prisma = new PrismaClient();
-
-async function main() {
+const seed = async () => {
 	await prisma.cartItem.deleteMany({});
 	await prisma.cart.deleteMany({});
 	await prisma.review.deleteMany({});
@@ -152,9 +150,9 @@ async function main() {
 
 		console.log(`Created order with id: ${createdOrder.id}`);
 	}
-}
+};
 
-main()
+seed()
 	.catch((e) => {
 		console.error(e);
 		process.exit(1);

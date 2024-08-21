@@ -1,4 +1,4 @@
-import type { CollectionResolvers, Product } from "./../../graphql/types.generated";
+import type { CollectionResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
 export const Collection: CollectionResolvers = {

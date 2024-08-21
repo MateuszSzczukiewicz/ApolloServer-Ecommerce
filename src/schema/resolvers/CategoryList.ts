@@ -1,4 +1,4 @@
-import type { CategoryListResolvers } from "./../../graphql/types.generated";
+import type { CategoryListResolvers } from "@/graphql/types.generated";
 
 export const CategoryList: CategoryListResolvers = {
 	data: ({ data }) => data,

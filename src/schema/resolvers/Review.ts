@@ -1,4 +1,4 @@
-import type { ReviewResolvers, Product } from "./../../graphql/types.generated";
+import type { ReviewResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
 export const Review: ReviewResolvers = {

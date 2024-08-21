@@ -4,7 +4,7 @@ import type {
 	ProductImage,
 	ProductResolvers,
 	Review,
-} from "./../../graphql/types.generated";
+} from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
 export const Product: ProductResolvers = {

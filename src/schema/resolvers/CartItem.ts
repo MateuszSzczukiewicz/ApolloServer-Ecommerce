@@ -1,4 +1,4 @@
-import type { CartItemResolvers, Product } from "./../../graphql/types.generated";
+import type { CartItemResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
 export const CartItem: CartItemResolvers = {
