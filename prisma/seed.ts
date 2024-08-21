@@ -8,7 +8,7 @@ async function main() {
 	await prisma.cart.deleteMany({});
 	await prisma.review.deleteMany({});
 	await prisma.productImage.deleteMany({});
-
+	await prisma.order.deleteMany({});
 	await prisma.product.deleteMany({});
 	await prisma.collection.deleteMany({});
 	await prisma.category.deleteMany({});
@@ -129,6 +129,28 @@ async function main() {
 				`Created cart item with id: ${createdCartItem.id} for cart id: ${createdCart.id} and product id: ${createdCartItem.productId}`,
 			);
 		}
+	}
+
+	for (let i = 0; i < 5; i++) {
+		const status = faker.helpers.arrayElement(["PENDING", "COMPLETED", "CANCELLED"]);
+		const lines = JSON.stringify(
+			products.map((product) => ({
+				productId: product.id,
+				quantity: faker.number.int({ min: 1, max: 3 }),
+				price: product.price,
+			})),
+		);
+		const totalAmount = products.reduce((sum, product) => sum + product.price, 0);
+
+		const createdOrder = await prisma.order.create({
+			data: {
+				status,
+				lines,
+				totalAmount,
+			},
+		});
+
+		console.log(`Created order with id: ${createdOrder.id}`);
 	}
 }
 
