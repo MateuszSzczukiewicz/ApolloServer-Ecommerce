@@ -503,6 +503,71 @@ export const typeDefs = {
 					},
 					directives: [],
 				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "reviewCreate" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "author" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "description" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "email" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "productId" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "rating" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "title" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+							},
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Cart" } },
+					},
+					directives: [],
+				},
 			],
 			directives: [],
 			interfaces: [],

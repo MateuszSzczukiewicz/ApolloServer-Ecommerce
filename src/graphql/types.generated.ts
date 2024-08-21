@@ -85,6 +85,7 @@ export type Mutation = {
 	cartChangeItemQuantity: Cart;
 	cartFindOrCreate: Cart;
 	cartRemoveItem: Cart;
+	reviewCreate: Cart;
 };
 
 export type MutationcartAddItemArgs = {
@@ -106,6 +107,15 @@ export type MutationcartFindOrCreateArgs = {
 export type MutationcartRemoveItemArgs = {
 	id: Scalars["ID"]["input"];
 	productId: Scalars["ID"]["input"];
+};
+
+export type MutationreviewCreateArgs = {
+	author: Scalars["String"]["input"];
+	description: Scalars["String"]["input"];
+	email: Scalars["String"]["input"];
+	productId: Scalars["ID"]["input"];
+	rating: Scalars["Int"]["input"];
+	title: Scalars["String"]["input"];
 };
 
 export type MutationCartAddItemInput = {
@@ -504,6 +514,15 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationcartRemoveItemArgs, "id" | "productId">
+	>;
+	reviewCreate?: Resolver<
+		ResolversTypes["Cart"],
+		ParentType,
+		ContextType,
+		RequireFields<
+			MutationreviewCreateArgs,
+			"author" | "description" | "email" | "productId" | "rating" | "title"
+		>
 	>;
 };
 

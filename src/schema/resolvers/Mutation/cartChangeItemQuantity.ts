@@ -1,11 +1,9 @@
 import { Cart, MutationResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
-export const cartChangeItemQuantity: MutationResolvers["cartChangeItemQuantity"] = async (
-	_parent,
-	{ id, productId, quantity },
-	_context,
-) => {
+export const cartChangeItemQuantity: NonNullable<
+	MutationResolvers["cartChangeItemQuantity"]
+> = async (_parent, { id, productId, quantity }, _context) => {
 	let cart = await prisma.cart.findUnique({
 		where: { id },
 		include: {

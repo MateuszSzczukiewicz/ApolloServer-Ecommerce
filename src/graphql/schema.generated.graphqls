@@ -55,6 +55,14 @@ type Mutation {
 	cartChangeItemQuantity(id: ID!, productId: ID!, quantity: Int!): Cart!
 	cartFindOrCreate(id: ID, input: MutationCartFindOrCreateInput!): Cart!
 	cartRemoveItem(id: ID!, productId: ID!): Cart!
+	reviewCreate(
+		author: String!
+		description: String!
+		email: String!
+		productId: ID!
+		rating: Int!
+		title: String!
+	): Cart!
 }
 
 input MutationCartAddItemInput {

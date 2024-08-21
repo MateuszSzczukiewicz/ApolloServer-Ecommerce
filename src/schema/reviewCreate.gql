@@ -1,0 +1,10 @@
+extend type Mutation {
+	reviewCreate(
+		author: String!
+		description: String!
+		email: String!
+		productId: ID!
+		rating: Int!
+		title: String!
+	): Cart!
+}
