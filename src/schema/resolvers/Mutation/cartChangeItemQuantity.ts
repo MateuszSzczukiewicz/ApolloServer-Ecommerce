@@ -1,9 +1,9 @@
 import { Cart, MutationResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
-export const cartRemoveItem: NonNullable<MutationResolvers["cartRemoveItem"]> = async (
+export const cartChangeItemQuantity: MutationResolvers["cartChangeItemQuantity"] = async (
 	_parent,
-	{ id, productId },
+	{ id, productId, quantity },
 	_context,
 ) => {
 	let cart = await prisma.cart.findUnique({
@@ -27,8 +27,9 @@ export const cartRemoveItem: NonNullable<MutationResolvers["cartRemoveItem"]> = 
 		throw new Error("Item not found in cart");
 	}
 
-	await prisma.cartItem.delete({
+	await prisma.cartItem.update({
 		where: { id: existingItem.id },
+		data: { quantity },
 	});
 
 	cart = await prisma.cart.findUnique({
@@ -47,7 +48,6 @@ export const cartRemoveItem: NonNullable<MutationResolvers["cartRemoveItem"]> = 
 	}
 
 	return {
-		...cart,
 		id: cart.id,
 		items: cart.items.map((item) => ({
 			...item,
@@ -55,5 +55,5 @@ export const cartRemoveItem: NonNullable<MutationResolvers["cartRemoveItem"]> = 
 				...item.product,
 			} as Partial<Product>,
 		})) as Cart["items"],
-	};
+	} as Cart;
 };

@@ -82,6 +82,7 @@ export type ListMeta = {
 export type Mutation = {
 	__typename?: "Mutation";
 	cartAddItem: Cart;
+	cartChangeItemQuantity: Cart;
 	cartFindOrCreate: Cart;
 	cartRemoveItem: Cart;
 };
@@ -89,6 +90,12 @@ export type Mutation = {
 export type MutationcartAddItemArgs = {
 	id: Scalars["ID"]["input"];
 	input: MutationCartAddItemInput;
+};
+
+export type MutationcartChangeItemQuantityArgs = {
+	id: Scalars["ID"]["input"];
+	productId: Scalars["ID"]["input"];
+	quantity: Scalars["Int"]["input"];
 };
 
 export type MutationcartFindOrCreateArgs = {
@@ -479,6 +486,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationcartAddItemArgs, "id" | "input">
+	>;
+	cartChangeItemQuantity?: Resolver<
+		ResolversTypes["Cart"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcartChangeItemQuantityArgs, "id" | "productId" | "quantity">
 	>;
 	cartFindOrCreate?: Resolver<
 		ResolversTypes["Cart"],

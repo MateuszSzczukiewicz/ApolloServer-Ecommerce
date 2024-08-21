@@ -10,6 +10,7 @@ import { orders as Query_orders } from "./../schema/resolvers/Query/orders";
 import { product as Query_product } from "./../schema/resolvers/Query/product";
 import { products as Query_products } from "./../schema/resolvers/Query/products";
 import { cartAddItem as Mutation_cartAddItem } from "./../schema/resolvers/Mutation/cartAddItem";
+import { cartChangeItemQuantity as Mutation_cartChangeItemQuantity } from "./../schema/resolvers/Mutation/cartChangeItemQuantity";
 import { cartFindOrCreate as Mutation_cartFindOrCreate } from "./../schema/resolvers/Mutation/cartFindOrCreate";
 import { cartRemoveItem as Mutation_cartRemoveItem } from "./../schema/resolvers/Mutation/cartRemoveItem";
 import { Cart } from "./../schema/resolvers/Cart";
@@ -40,6 +41,7 @@ export const resolvers: Resolvers = {
 	},
 	Mutation: {
 		cartAddItem: Mutation_cartAddItem,
+		cartChangeItemQuantity: Mutation_cartChangeItemQuantity,
 		cartFindOrCreate: Mutation_cartFindOrCreate,
 		cartRemoveItem: Mutation_cartRemoveItem,
 	},

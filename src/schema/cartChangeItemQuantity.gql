@@ -1,0 +1,3 @@
+type Mutation {
+	cartChangeItemQuantity(id: ID!, productId: ID!, quantity: Int!): Cart!
+}
