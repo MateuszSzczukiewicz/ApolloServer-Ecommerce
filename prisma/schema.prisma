@@ -75,3 +75,12 @@ model CartItem {
     cartId    String
     cart      Cart    @relation(fields: [cartId], references: [id])
 }
+
+model Order {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    status      String
+    totalAmount Int
+    lines       String
+}

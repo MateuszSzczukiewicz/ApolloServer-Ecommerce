@@ -48,12 +48,12 @@ export const Product: ProductResolvers = {
 		});
 		return reviews as Review[];
 	},
-	createdAt: (parent) => parent.createdAt,
-	description: (parent) => parent.description,
-	id: (parent) => parent.id,
-	name: (parent) => parent.name,
-	price: (parent) => parent.price,
-	rating: (parent) => parent.rating,
-	slug: (parent) => parent.slug,
-	updatedAt: (parent) => parent.updatedAt,
+	createdAt: ({ createdAt }) => createdAt,
+	description: ({ description }) => description,
+	id: ({ id }) => id,
+	name: ({ name }) => name,
+	price: ({ price }) => price,
+	rating: ({ rating }) => rating,
+	slug: ({ slug }) => slug,
+	updatedAt: ({ updatedAt }) => updatedAt,
 };

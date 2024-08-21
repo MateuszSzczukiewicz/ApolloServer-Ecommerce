@@ -16,6 +16,9 @@ const config = {
 				DateTime: {
 					type: "Date",
 				},
+				JSON: {
+					type: "Record<string,unknown>",
+				},
 			},
 		}),
 	},

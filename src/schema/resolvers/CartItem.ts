@@ -1,4 +1,12 @@
-import type { CartItemResolvers } from "./../../graphql/types.generated";
+import type { CartItemResolvers, Product } from "./../../graphql/types.generated";
+import { prisma } from "@/db";
+
 export const CartItem: CartItemResolvers = {
-	/* Implement CartItem resolver logic here */
+	product: async ({ product: { id } }) => {
+		const product = await prisma.product.findUnique({
+			where: { id: id },
+		});
+		return product as Product;
+	},
+	quantity: ({ quantity }) => quantity,
 };

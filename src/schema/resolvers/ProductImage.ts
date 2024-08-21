@@ -8,10 +8,10 @@ export const ProductImage: ProductImageResolvers = {
 		});
 		return product as Product;
 	},
-	id: (parent) => parent.id,
-	url: (parent) => parent.url,
-	alt: (parent) => parent.alt,
-	width: (parent) => parent.width,
-	height: (parent) => parent.height,
-	productId: (parent) => parent.productId,
+	id: ({ id }) => id,
+	url: ({ url }) => url,
+	alt: ({ alt }) => alt,
+	width: ({ width }) => width,
+	height: ({ height }) => height,
+	productId: ({ productId }) => productId,
 };

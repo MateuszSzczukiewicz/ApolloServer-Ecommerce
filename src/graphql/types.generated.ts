@@ -10,6 +10,7 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> =
 	| T
 	| { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -20,6 +21,7 @@ export type Scalars = {
 	Int: { input: number; output: number };
 	Float: { input: number; output: number };
 	DateTime: { input: Date; output: Date };
+	JSON: { input: Record<string, unknown>; output: Record<string, unknown> };
 };
 
 export type Cart = {
@@ -70,6 +72,18 @@ export type ListMeta = {
 	total: Scalars["Int"]["output"];
 };
 
+export type Order = {
+	__typename?: "Order";
+	createdAt: Scalars["DateTime"]["output"];
+	id: Scalars["ID"]["output"];
+	lines: Scalars["JSON"]["output"];
+	status: OrderStatus;
+	totalAmount: Scalars["Int"]["output"];
+	updatedAt: Scalars["DateTime"]["output"];
+};
+
+export type OrderStatus = "CANCELLED" | "COMPLETED" | "PENDING";
+
 export type Product = {
 	__typename?: "Product";
 	categories: Array<Category>;
@@ -112,6 +126,7 @@ export type Query = {
 	category?: Maybe<Category>;
 	collection?: Maybe<Collection>;
 	collections: CollectionList;
+	order: Order;
 	product: Product;
 	products: ProductList;
 };
@@ -138,6 +153,10 @@ export type QuerycollectionArgs = {
 export type QuerycollectionsArgs = {
 	skip?: Scalars["Int"]["input"];
 	take?: Scalars["Int"]["input"];
+};
+
+export type QueryorderArgs = {
+	id: Scalars["ID"]["input"];
 };
 
 export type QueryproductArgs = {
@@ -263,7 +282,10 @@ export type ResolversTypes = {
 	Collection: ResolverTypeWrapper<Collection>;
 	CollectionList: ResolverTypeWrapper<CollectionList>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
+	JSON: ResolverTypeWrapper<Scalars["JSON"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
+	Order: ResolverTypeWrapper<Omit<Order, "status"> & { status: ResolversTypes["OrderStatus"] }>;
+	OrderStatus: ResolverTypeWrapper<"PENDING" | "COMPLETED" | "CANCELLED">;
 	Product: ResolverTypeWrapper<Product>;
 	Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
 	ProductImage: ResolverTypeWrapper<ProductImage>;
@@ -287,7 +309,9 @@ export type ResolversParentTypes = {
 	Collection: Collection;
 	CollectionList: CollectionList;
 	DateTime: Scalars["DateTime"]["output"];
+	JSON: Scalars["JSON"]["output"];
 	ListMeta: ListMeta;
+	Order: Order;
 	Product: Product;
 	Float: Scalars["Float"]["output"];
 	ProductImage: ProductImage;
@@ -363,6 +387,10 @@ export interface DateTimeScalarConfig
 	name: "DateTime";
 }
 
+export interface JSONScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes["JSON"], any> {
+	name: "JSON";
+}
+
 export type ListMetaResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["ListMeta"] = ResolversParentTypes["ListMeta"],
@@ -371,6 +399,24 @@ export type ListMetaResolvers<
 	total?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export type OrderResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
+> = {
+	createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	lines?: Resolver<ResolversTypes["JSON"], ParentType, ContextType>;
+	status?: Resolver<ResolversTypes["OrderStatus"], ParentType, ContextType>;
+	totalAmount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	updatedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OrderStatusResolvers = EnumResolverSignature<
+	{ CANCELLED?: any; COMPLETED?: any; PENDING?: any },
+	ResolversTypes["OrderStatus"]
+>;
 
 export type ProductResolvers<
 	ContextType = any,
@@ -453,6 +499,12 @@ export type QueryResolvers<
 		ContextType,
 		RequireFields<QuerycollectionsArgs, "skip" | "take">
 	>;
+	order?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<QueryorderArgs, "id">
+	>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
 	products?: Resolver<
 		ResolversTypes["ProductList"],
@@ -492,7 +544,10 @@ export type Resolvers<ContextType = any> = {
 	Collection?: CollectionResolvers<ContextType>;
 	CollectionList?: CollectionListResolvers<ContextType>;
 	DateTime?: GraphQLScalarType;
+	JSON?: GraphQLScalarType;
 	ListMeta?: ListMetaResolvers<ContextType>;
+	Order?: OrderResolvers<ContextType>;
+	OrderStatus?: OrderStatusResolvers;
 	Product?: ProductResolvers<ContextType>;
 	ProductImage?: ProductImageResolvers<ContextType>;
 	ProductList?: ProductListResolvers<ContextType>;

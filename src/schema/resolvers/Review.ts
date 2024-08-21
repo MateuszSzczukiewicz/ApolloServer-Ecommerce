@@ -8,13 +8,13 @@ export const Review: ReviewResolvers = {
 		});
 		return product as Product;
 	},
-	id: (parent) => parent.id,
-	author: (parent) => parent.author,
-	email: (parent) => parent.email,
-	rating: (parent) => parent.rating,
-	title: (parent) => parent.title,
-	description: (parent) => parent.description,
-	createdAt: (parent) => parent.createdAt,
-	updatedAt: (parent) => parent.updatedAt,
-	productId: (parent) => parent.productId,
+	id: ({ id }) => id,
+	author: ({ author }) => author,
+	email: ({ email }) => email,
+	rating: ({ rating }) => rating,
+	title: ({ title }) => title,
+	description: ({ description }) => description,
+	createdAt: ({ createdAt }) => createdAt,
+	updatedAt: ({ updatedAt }) => updatedAt,
+	productId: ({ productId }) => productId,
 };

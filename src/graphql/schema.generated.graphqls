@@ -36,9 +36,26 @@ type CollectionList {
 
 scalar DateTime
 
+scalar JSON
+
 type ListMeta {
 	count: Int!
 	total: Int!
+}
+
+type Order {
+	createdAt: DateTime!
+	id: ID!
+	lines: JSON!
+	status: OrderStatus!
+	totalAmount: Int!
+	updatedAt: DateTime!
+}
+
+enum OrderStatus {
+	CANCELLED
+	COMPLETED
+	PENDING
 }
 
 type Product {
@@ -84,6 +101,7 @@ type Query {
 	category(id: ID, slug: String): Category
 	collection(id: ID, slug: String): Collection
 	collections(skip: Int! = 0, take: Int! = 10): CollectionList!
+	order(id: ID!): Order!
 	product(id: ID, slug: String): Product!
 	products(
 		order: SortDirection! = ASC

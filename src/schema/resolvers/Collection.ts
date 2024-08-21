@@ -14,8 +14,8 @@ export const Collection: CollectionResolvers = {
 		});
 		return products as Product[];
 	},
-	description: (parent) => parent.description,
-	id: (parent) => parent.id,
-	name: (parent) => parent.name,
-	slug: (parent) => parent.slug,
+	description: ({ description }) => description,
+	id: ({ id }) => id,
+	name: ({ name }) => name,
+	slug: ({ slug }) => slug,
 };

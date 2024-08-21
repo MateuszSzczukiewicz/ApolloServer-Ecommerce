@@ -127,6 +127,26 @@ export const typeDefs = {
 				},
 				{
 					kind: "FieldDefinition",
+					name: { kind: "Name", value: "order" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "id" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+							},
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Order" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
 					name: { kind: "Name", value: "product" },
 					arguments: [
 						{
@@ -493,6 +513,85 @@ export const typeDefs = {
 					},
 					directives: [],
 				},
+			],
+		},
+		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "JSON" }, directives: [] },
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Order" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "createdAt" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "DateTime" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "updatedAt" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "DateTime" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "status" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "OrderStatus" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "totalAmount" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "lines" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "JSON" } },
+					},
+					directives: [],
+				},
+			],
+		},
+		{
+			kind: "EnumTypeDefinition",
+			name: { kind: "Name", value: "OrderStatus" },
+			directives: [],
+			values: [
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "PENDING" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "COMPLETED" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "CANCELLED" }, directives: [] },
 			],
 		},
 		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "DateTime" }, directives: [] },
