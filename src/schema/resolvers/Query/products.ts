@@ -1,7 +1,6 @@
 import { ProductList, QueryResolvers } from "@/graphql/types.generated";
 import { prisma } from "@/db";
-
-type SortOrder = "asc" | "desc";
+import { SortOrder } from "@/types";
 
 export const products: NonNullable<QueryResolvers["products"]> = async (
 	_parent,

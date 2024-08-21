@@ -147,6 +147,66 @@ export const typeDefs = {
 				},
 				{
 					kind: "FieldDefinition",
+					name: { kind: "Name", value: "orders" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "email" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+							},
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "order" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "SortDirection" } },
+							},
+							defaultValue: { kind: "EnumValue", value: "ASC" },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "orderBy" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "OrderSortBy" } },
+							},
+							defaultValue: { kind: "EnumValue", value: "DEFAULT" },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "skip" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "0" },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "take" },
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+							},
+							defaultValue: { kind: "IntValue", value: "10" },
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "OrderList" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
 					name: { kind: "Name", value: "product" },
 					arguments: [
 						{
@@ -517,10 +577,8 @@ export const typeDefs = {
 		},
 		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "JSON" }, directives: [] },
 		{
-			kind: "ObjectTypeDefinition",
 			name: { kind: "Name", value: "Order" },
-			interfaces: [],
-			directives: [],
+			kind: "ObjectTypeDefinition",
 			fields: [
 				{
 					kind: "FieldDefinition",
@@ -583,6 +641,8 @@ export const typeDefs = {
 					directives: [],
 				},
 			],
+			directives: [],
+			interfaces: [],
 		},
 		{
 			kind: "EnumTypeDefinition",
@@ -592,6 +652,60 @@ export const typeDefs = {
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "PENDING" }, directives: [] },
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "COMPLETED" }, directives: [] },
 				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "CANCELLED" }, directives: [] },
+			],
+		},
+		{
+			name: { kind: "Name", value: "SortDirection" },
+			kind: "EnumTypeDefinition",
+			directives: [],
+			values: [
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "ASC" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "DESC" }, directives: [] },
+			],
+		},
+		{
+			kind: "EnumTypeDefinition",
+			name: { kind: "Name", value: "OrderSortBy" },
+			directives: [],
+			values: [
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "DEFAULT" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "NAME" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "PRICE" }, directives: [] },
+				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "RATING" }, directives: [] },
+			],
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "OrderList" },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "data" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "ListType",
+							type: {
+								kind: "NonNullType",
+								type: { kind: "NamedType", name: { kind: "Name", value: "Order" } },
+							},
+						},
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "meta" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ListMeta" } },
+					},
+					directives: [],
+				},
 			],
 		},
 		{ kind: "ScalarTypeDefinition", name: { kind: "Name", value: "DateTime" }, directives: [] },
@@ -928,15 +1042,6 @@ export const typeDefs = {
 					},
 					directives: [],
 				},
-			],
-		},
-		{
-			kind: "EnumTypeDefinition",
-			name: { kind: "Name", value: "SortDirection" },
-			directives: [],
-			values: [
-				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "ASC" }, directives: [] },
-				{ kind: "EnumValueDefinition", name: { kind: "Name", value: "DESC" }, directives: [] },
 			],
 		},
 		{

@@ -1,0 +1,40 @@
+extend type Query {
+	orders(
+		email: String!
+		order: SortDirection! = ASC
+		orderBy: OrderSortBy! = DEFAULT
+		skip: Int! = 0
+		take: Int! = 10
+	): OrderList!
+}
+
+enum SortDirection {
+	ASC
+	DESC
+}
+
+enum OrderSortBy {
+	DEFAULT
+	NAME
+	PRICE
+	RATING
+}
+
+type ListMeta {
+	count: Int!
+	total: Int!
+}
+
+type Order {
+	id: ID!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	status: OrderStatus!
+	totalAmount: Int!
+	lines: JSON!
+}
+
+type OrderList {
+	data: [Order!]!
+	meta: ListMeta!
+}

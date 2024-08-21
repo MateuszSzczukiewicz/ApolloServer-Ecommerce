@@ -52,6 +52,18 @@ type Order {
 	updatedAt: DateTime!
 }
 
+type OrderList {
+	data: [Order!]!
+	meta: ListMeta!
+}
+
+enum OrderSortBy {
+	DEFAULT
+	NAME
+	PRICE
+	RATING
+}
+
 enum OrderStatus {
 	CANCELLED
 	COMPLETED
@@ -102,6 +114,13 @@ type Query {
 	collection(id: ID, slug: String): Collection
 	collections(skip: Int! = 0, take: Int! = 10): CollectionList!
 	order(id: ID!): Order!
+	orders(
+		email: String!
+		order: SortDirection! = ASC
+		orderBy: OrderSortBy! = DEFAULT
+		skip: Int! = 0
+		take: Int! = 10
+	): OrderList!
 	product(id: ID, slug: String): Product!
 	products(
 		order: SortDirection! = ASC

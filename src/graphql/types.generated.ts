@@ -82,6 +82,14 @@ export type Order = {
 	updatedAt: Scalars["DateTime"]["output"];
 };
 
+export type OrderList = {
+	__typename?: "OrderList";
+	data: Array<Order>;
+	meta: ListMeta;
+};
+
+export type OrderSortBy = "DEFAULT" | "NAME" | "PRICE" | "RATING";
+
 export type OrderStatus = "CANCELLED" | "COMPLETED" | "PENDING";
 
 export type Product = {
@@ -127,6 +135,7 @@ export type Query = {
 	collection?: Maybe<Collection>;
 	collections: CollectionList;
 	order: Order;
+	orders: OrderList;
 	product: Product;
 	products: ProductList;
 };
@@ -157,6 +166,14 @@ export type QuerycollectionsArgs = {
 
 export type QueryorderArgs = {
 	id: Scalars["ID"]["input"];
+};
+
+export type QueryordersArgs = {
+	email: Scalars["String"]["input"];
+	order?: SortDirection;
+	orderBy?: OrderSortBy;
+	skip?: Scalars["Int"]["input"];
+	take?: Scalars["Int"]["input"];
 };
 
 export type QueryproductArgs = {
@@ -285,6 +302,10 @@ export type ResolversTypes = {
 	JSON: ResolverTypeWrapper<Scalars["JSON"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
 	Order: ResolverTypeWrapper<Omit<Order, "status"> & { status: ResolversTypes["OrderStatus"] }>;
+	OrderList: ResolverTypeWrapper<
+		Omit<OrderList, "data"> & { data: Array<ResolversTypes["Order"]> }
+	>;
+	OrderSortBy: ResolverTypeWrapper<"DEFAULT" | "NAME" | "PRICE" | "RATING">;
 	OrderStatus: ResolverTypeWrapper<"PENDING" | "COMPLETED" | "CANCELLED">;
 	Product: ResolverTypeWrapper<Product>;
 	Float: ResolverTypeWrapper<Scalars["Float"]["output"]>;
@@ -312,6 +333,7 @@ export type ResolversParentTypes = {
 	JSON: Scalars["JSON"]["output"];
 	ListMeta: ListMeta;
 	Order: Order;
+	OrderList: Omit<OrderList, "data"> & { data: Array<ResolversParentTypes["Order"]> };
 	Product: Product;
 	Float: Scalars["Float"]["output"];
 	ProductImage: ProductImage;
@@ -413,6 +435,20 @@ export type OrderResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type OrderListResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["OrderList"] = ResolversParentTypes["OrderList"],
+> = {
+	data?: Resolver<Array<ResolversTypes["Order"]>, ParentType, ContextType>;
+	meta?: Resolver<ResolversTypes["ListMeta"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OrderSortByResolvers = EnumResolverSignature<
+	{ DEFAULT?: any; NAME?: any; PRICE?: any; RATING?: any },
+	ResolversTypes["OrderSortBy"]
+>;
+
 export type OrderStatusResolvers = EnumResolverSignature<
 	{ CANCELLED?: any; COMPLETED?: any; PENDING?: any },
 	ResolversTypes["OrderStatus"]
@@ -505,6 +541,12 @@ export type QueryResolvers<
 		ContextType,
 		RequireFields<QueryorderArgs, "id">
 	>;
+	orders?: Resolver<
+		ResolversTypes["OrderList"],
+		ParentType,
+		ContextType,
+		RequireFields<QueryordersArgs, "email" | "order" | "orderBy" | "skip" | "take">
+	>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType, Partial<QueryproductArgs>>;
 	products?: Resolver<
 		ResolversTypes["ProductList"],
@@ -547,6 +589,8 @@ export type Resolvers<ContextType = any> = {
 	JSON?: GraphQLScalarType;
 	ListMeta?: ListMetaResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
+	OrderList?: OrderListResolvers<ContextType>;
+	OrderSortBy?: OrderSortByResolvers;
 	OrderStatus?: OrderStatusResolvers;
 	Product?: ProductResolvers<ContextType>;
 	ProductImage?: ProductImageResolvers<ContextType>;
