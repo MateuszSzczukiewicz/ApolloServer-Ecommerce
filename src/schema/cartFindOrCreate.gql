@@ -1,0 +1,24 @@
+extend type Mutation {
+	cartFindOrCreate(id: ID, input: MutationCartFindOrCreateInput!): Cart!
+}
+
+input MutationCartFindOrCreateInput {
+	items: [CartItemInput!]
+}
+
+input CartItemInput {
+	productId: String!
+	quantity: Int = 1
+}
+
+type Cart {
+	id: ID!
+	items: [CartItem!]!
+}
+
+type CartItem {
+	id: ID!
+	productId: String!
+	quantity: Int!
+	product: Product!
+}

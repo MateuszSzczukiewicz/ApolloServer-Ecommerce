@@ -9,6 +9,7 @@ import { order as Query_order } from "./../schema/resolvers/Query/order";
 import { orders as Query_orders } from "./../schema/resolvers/Query/orders";
 import { product as Query_product } from "./../schema/resolvers/Query/product";
 import { products as Query_products } from "./../schema/resolvers/Query/products";
+import { cartFindOrCreate as Mutation_cartFindOrCreate } from "./../schema/resolvers/Mutation/cartFindOrCreate";
 import { Cart } from "./../schema/resolvers/Cart";
 import { CartItem } from "./../schema/resolvers/CartItem";
 import { Category } from "./../schema/resolvers/Category";
@@ -35,6 +36,7 @@ export const resolvers: Resolvers = {
 		product: Query_product,
 		products: Query_products,
 	},
+	Mutation: { cartFindOrCreate: Mutation_cartFindOrCreate },
 
 	Cart: Cart,
 	CartItem: CartItem,

@@ -4,8 +4,15 @@ type Cart {
 }
 
 type CartItem {
+	id: ID!
 	product: Product!
+	productId: String!
 	quantity: Int!
+}
+
+input CartItemInput {
+	productId: String!
+	quantity: Int = 1
 }
 
 type Category {
@@ -41,6 +48,14 @@ scalar JSON
 type ListMeta {
 	count: Int!
 	total: Int!
+}
+
+type Mutation {
+	cartFindOrCreate(id: ID, input: MutationCartFindOrCreateInput!): Cart!
+}
+
+input MutationCartFindOrCreateInput {
+	items: [CartItemInput!]
 }
 
 type Order {

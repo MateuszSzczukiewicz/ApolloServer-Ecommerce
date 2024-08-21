@@ -11,8 +11,8 @@ export type Incremental<T> =
 	| T
 	| { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
 	ID: { input: string; output: string };
@@ -32,8 +32,15 @@ export type Cart = {
 
 export type CartItem = {
 	__typename?: "CartItem";
+	id: Scalars["ID"]["output"];
 	product: Product;
+	productId: Scalars["String"]["output"];
 	quantity: Scalars["Int"]["output"];
+};
+
+export type CartItemInput = {
+	productId: Scalars["String"]["input"];
+	quantity?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type Category = {
@@ -70,6 +77,20 @@ export type ListMeta = {
 	__typename?: "ListMeta";
 	count: Scalars["Int"]["output"];
 	total: Scalars["Int"]["output"];
+};
+
+export type Mutation = {
+	__typename?: "Mutation";
+	cartFindOrCreate: Cart;
+};
+
+export type MutationcartFindOrCreateArgs = {
+	id?: InputMaybe<Scalars["ID"]["input"]>;
+	input: MutationCartFindOrCreateInput;
+};
+
+export type MutationCartFindOrCreateInput = {
+	items?: InputMaybe<Array<CartItemInput>>;
 };
 
 export type Order = {
@@ -292,15 +313,18 @@ export type ResolversTypes = {
 	Cart: ResolverTypeWrapper<Cart>;
 	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
 	CartItem: ResolverTypeWrapper<CartItem>;
-	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
-	Category: ResolverTypeWrapper<Category>;
 	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
+	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
+	CartItemInput: CartItemInput;
+	Category: ResolverTypeWrapper<Category>;
 	CategoryList: ResolverTypeWrapper<CategoryList>;
 	Collection: ResolverTypeWrapper<Collection>;
 	CollectionList: ResolverTypeWrapper<CollectionList>;
 	DateTime: ResolverTypeWrapper<Scalars["DateTime"]["output"]>;
 	JSON: ResolverTypeWrapper<Scalars["JSON"]["output"]>;
 	ListMeta: ResolverTypeWrapper<ListMeta>;
+	Mutation: ResolverTypeWrapper<{}>;
+	MutationCartFindOrCreateInput: MutationCartFindOrCreateInput;
 	Order: ResolverTypeWrapper<Omit<Order, "status"> & { status: ResolversTypes["OrderStatus"] }>;
 	OrderList: ResolverTypeWrapper<
 		Omit<OrderList, "data"> & { data: Array<ResolversTypes["Order"]> }
@@ -323,15 +347,18 @@ export type ResolversParentTypes = {
 	Cart: Cart;
 	ID: Scalars["ID"]["output"];
 	CartItem: CartItem;
-	Int: Scalars["Int"]["output"];
-	Category: Category;
 	String: Scalars["String"]["output"];
+	Int: Scalars["Int"]["output"];
+	CartItemInput: CartItemInput;
+	Category: Category;
 	CategoryList: CategoryList;
 	Collection: Collection;
 	CollectionList: CollectionList;
 	DateTime: Scalars["DateTime"]["output"];
 	JSON: Scalars["JSON"]["output"];
 	ListMeta: ListMeta;
+	Mutation: {};
+	MutationCartFindOrCreateInput: MutationCartFindOrCreateInput;
 	Order: Order;
 	OrderList: Omit<OrderList, "data"> & { data: Array<ResolversParentTypes["Order"]> };
 	Product: Product;
@@ -356,7 +383,9 @@ export type CartItemResolvers<
 	ContextType = any,
 	ParentType extends ResolversParentTypes["CartItem"] = ResolversParentTypes["CartItem"],
 > = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	productId?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	quantity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -420,6 +449,18 @@ export type ListMetaResolvers<
 	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	total?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+	ContextType = any,
+	ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
+> = {
+	cartFindOrCreate?: Resolver<
+		ResolversTypes["Cart"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcartFindOrCreateArgs, "input">
+	>;
 };
 
 export type OrderResolvers<
@@ -588,6 +629,7 @@ export type Resolvers<ContextType = any> = {
 	DateTime?: GraphQLScalarType;
 	JSON?: GraphQLScalarType;
 	ListMeta?: ListMetaResolvers<ContextType>;
+	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderList?: OrderListResolvers<ContextType>;
 	OrderSortBy?: OrderSortByResolvers;

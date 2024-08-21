@@ -290,10 +290,8 @@ export const typeDefs = {
 			interfaces: [],
 		},
 		{
-			kind: "ObjectTypeDefinition",
 			name: { kind: "Name", value: "Cart" },
-			interfaces: [],
-			directives: [],
+			kind: "ObjectTypeDefinition",
 			fields: [
 				{
 					kind: "FieldDefinition",
@@ -322,12 +320,12 @@ export const typeDefs = {
 					directives: [],
 				},
 			],
+			directives: [],
+			interfaces: [],
 		},
 		{
-			kind: "ObjectTypeDefinition",
 			name: { kind: "Name", value: "CartItem" },
-			interfaces: [],
-			directives: [],
+			kind: "ObjectTypeDefinition",
 			fields: [
 				{
 					kind: "FieldDefinition",
@@ -347,6 +345,107 @@ export const typeDefs = {
 						kind: "NonNullType",
 						type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
 					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "productId" },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+			],
+			directives: [],
+			interfaces: [],
+		},
+		{
+			name: { kind: "Name", value: "Mutation" },
+			kind: "ObjectTypeDefinition",
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "cartFindOrCreate" },
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "id" },
+							type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+							directives: [],
+						},
+						{
+							kind: "InputValueDefinition",
+							name: { kind: "Name", value: "input" },
+							type: {
+								kind: "NonNullType",
+								type: {
+									kind: "NamedType",
+									name: { kind: "Name", value: "MutationCartFindOrCreateInput" },
+								},
+							},
+							directives: [],
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "Cart" } },
+					},
+					directives: [],
+				},
+			],
+			directives: [],
+			interfaces: [],
+		},
+		{
+			kind: "InputObjectTypeDefinition",
+			name: { kind: "Name", value: "MutationCartFindOrCreateInput" },
+			directives: [],
+			fields: [
+				{
+					kind: "InputValueDefinition",
+					name: { kind: "Name", value: "items" },
+					type: {
+						kind: "ListType",
+						type: {
+							kind: "NonNullType",
+							type: { kind: "NamedType", name: { kind: "Name", value: "CartItemInput" } },
+						},
+					},
+					directives: [],
+				},
+			],
+		},
+		{
+			kind: "InputObjectTypeDefinition",
+			name: { kind: "Name", value: "CartItemInput" },
+			directives: [],
+			fields: [
+				{
+					kind: "InputValueDefinition",
+					name: { kind: "Name", value: "productId" },
+					type: {
+						kind: "NonNullType",
+						type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+					},
+					directives: [],
+				},
+				{
+					kind: "InputValueDefinition",
+					name: { kind: "Name", value: "quantity" },
+					type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+					defaultValue: { kind: "IntValue", value: "1" },
 					directives: [],
 				},
 			],
@@ -1096,6 +1195,11 @@ export const typeDefs = {
 					kind: "OperationTypeDefinition",
 					type: { kind: "NamedType", name: { kind: "Name", value: "Query" } },
 					operation: "query",
+				},
+				{
+					kind: "OperationTypeDefinition",
+					type: { kind: "NamedType", name: { kind: "Name", value: "Mutation" } },
+					operation: "mutation",
 				},
 			],
 		},
