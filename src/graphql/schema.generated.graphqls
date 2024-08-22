@@ -53,6 +53,7 @@ type ListMeta {
 type Mutation {
 	cartAddItem(id: ID!, input: MutationCartAddItemInput!): Cart!
 	cartChangeItemQuantity(id: ID!, productId: ID!, quantity: Int!): Cart!
+	cartComplete(cartId: ID!, userEmail: String!): Order!
 	cartFindOrCreate(id: ID, input: MutationCartFindOrCreateInput!): Cart!
 	cartRemoveItem(id: ID!, productId: ID!): Cart!
 	reviewCreate(

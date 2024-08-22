@@ -1,0 +1,3 @@
+extend type Mutation {
+	cartComplete(cartId: ID!, userEmail: String!): Order!
+}

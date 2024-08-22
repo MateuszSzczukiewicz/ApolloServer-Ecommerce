@@ -83,6 +83,7 @@ export type Mutation = {
 	__typename?: "Mutation";
 	cartAddItem: Cart;
 	cartChangeItemQuantity: Cart;
+	cartComplete: Order;
 	cartFindOrCreate: Cart;
 	cartRemoveItem: Cart;
 	reviewCreate: Cart;
@@ -97,6 +98,11 @@ export type MutationcartChangeItemQuantityArgs = {
 	id: Scalars["ID"]["input"];
 	productId: Scalars["ID"]["input"];
 	quantity: Scalars["Int"]["input"];
+};
+
+export type MutationcartCompleteArgs = {
+	cartId: Scalars["ID"]["input"];
+	userEmail: Scalars["String"]["input"];
 };
 
 export type MutationcartFindOrCreateArgs = {
@@ -502,6 +508,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationcartChangeItemQuantityArgs, "id" | "productId" | "quantity">
+	>;
+	cartComplete?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcartCompleteArgs, "cartId" | "userEmail">
 	>;
 	cartFindOrCreate?: Resolver<
 		ResolversTypes["Cart"],

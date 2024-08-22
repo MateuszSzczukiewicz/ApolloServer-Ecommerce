@@ -1,7 +1,7 @@
 import { Cart, MutationResolvers, Product } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
-export const reviewCreate: MutationResolvers["reviewCreate"] = async (
+export const reviewCreate: NonNullable<MutationResolvers["reviewCreate"]> = async (
 	_parent,
 	{ author, description, email, productId, rating, title },
 	_context,
