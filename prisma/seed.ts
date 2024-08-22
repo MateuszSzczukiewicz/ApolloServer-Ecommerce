@@ -11,7 +11,7 @@ const seed = async () => {
 	await prisma.collection.deleteMany({});
 	await prisma.category.deleteMany({});
 
-	const productsCount = 14;
+	const productsCount = 200;
 	const collectionsCount = 3;
 	const categoriesCount = 5;
 
@@ -80,8 +80,8 @@ const seed = async () => {
 				data: {
 					url: faker.image.urlLoremFlickr({ category: "fashion" }),
 					alt: faker.lorem.words(3),
-					width: faker.number.int(1000),
-					height: faker.number.int(1000),
+					width: 640,
+					height: 480,
 					productId: createdProduct.id,
 				},
 			});
@@ -113,7 +113,7 @@ const seed = async () => {
 
 		for (let j = 0; j < 3; j++) {
 			const productIndex = faker.number.int({ min: 0, max: products.length - 1 });
-			const quantity = faker.number.int({ min: 1, max: 5 });
+			const quantity = 1;
 
 			const createdCartItem = await prisma.cartItem.create({
 				data: {
@@ -134,7 +134,7 @@ const seed = async () => {
 		const lines = JSON.stringify(
 			products.map((product) => ({
 				productId: product.id,
-				quantity: faker.number.int({ min: 1, max: 3 }),
+				quantity: 1,
 				price: product.price,
 			})),
 		);

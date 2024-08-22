@@ -1,7 +1,7 @@
 import { MutationResolvers, Order } from "@/graphql/types.generated";
 import { prisma } from "@/db";
 
-export const cartComplete: MutationResolvers["cartComplete"] = async (
+export const cartComplete: NonNullable<MutationResolvers["cartComplete"]> = async (
 	_parent,
 	{ cartId },
 	_context,
