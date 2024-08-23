@@ -9,7 +9,7 @@ generator client {
 
 model Product {
     id          String         @id @default(cuid())
-    name        String
+    name        String         @unique
     description String
     price       Int
     rating      Float?
@@ -25,7 +25,7 @@ model Product {
 
 model Category {
     id          String    @id @default(cuid())
-    name        String
+    name        String    @unique
     description String
     slug        String    @unique
     products    Product[]
@@ -33,7 +33,7 @@ model Category {
 
 model Collection {
     id          String    @id @default(cuid())
-    name        String
+    name        String    @unique
     description String
     slug        String    @unique
     products    Product[]

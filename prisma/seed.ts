@@ -1,5 +1,30 @@
 import { faker } from "@faker-js/faker";
 import { prisma } from "@/db";
+import { Product } from "@/graphql/types.generated";
+
+async function createUniqueNameAndSlug<T extends { name: string; slug: string }>(
+	generateName: () => string,
+	model: { findUnique: (args: { where: { slug: string } }) => Promise<T | null> },
+): Promise<{ name: string; slug: string }> {
+	let name = generateName();
+	let slug = faker.helpers.slugify(name).toLowerCase();
+	let isUnique = false;
+	let attempt = 1;
+
+	while (!isUnique) {
+		const existingItem = await model.findUnique({
+			where: { slug },
+		});
+
+		isUnique = !existingItem;
+		if (!isUnique) {
+			name = `${generateName()}-${attempt++}`;
+			slug = faker.helpers.slugify(name).toLowerCase();
+		}
+	}
+
+	return { name, slug };
+}
 
 const seed = async () => {
 	await prisma.cartItem.deleteMany({});
@@ -16,14 +41,15 @@ const seed = async () => {
 	const categoriesCount = 5;
 
 	const collections = [];
-	const categories = [];
-
 	for (let i = 0; i < collectionsCount; i++) {
-		const collectionName = faker.commerce.department();
+		const { name, slug } = await createUniqueNameAndSlug(
+			faker.commerce.department,
+			prisma.collection,
+		);
 		const createdCollection = await prisma.collection.create({
 			data: {
-				name: collectionName,
-				slug: faker.helpers.slugify(collectionName).toLowerCase(),
+				name,
+				slug,
 				description: faker.lorem.sentence(),
 			},
 		});
@@ -31,12 +57,16 @@ const seed = async () => {
 		console.log(`Created collection with id: ${createdCollection.id}`);
 	}
 
+	const categories = [];
 	for (let i = 0; i < categoriesCount; i++) {
-		const categoryName = faker.commerce.department();
+		const { name, slug } = await createUniqueNameAndSlug(
+			faker.commerce.department,
+			prisma.category,
+		);
 		const createdCategory = await prisma.category.create({
 			data: {
-				name: categoryName,
-				slug: faker.helpers.slugify(categoryName).toLowerCase(),
+				name,
+				slug,
 				description: faker.lorem.sentence(),
 			},
 		});
@@ -44,9 +74,12 @@ const seed = async () => {
 		console.log(`Created category with id: ${createdCategory.id}`);
 	}
 
-	const products = [];
+	const products: Product[] = [];
 	for (let i = 0; i < productsCount; i++) {
-		const name = faker.commerce.productName();
+		const { name, slug } = await createUniqueNameAndSlug(
+			faker.commerce.productName,
+			prisma.product,
+		);
 		const price = faker.number.int({ min: 100, max: 1000 });
 		const rating = faker.number.float({ min: 1, max: 5, fractionDigits: 1 });
 		const collectionIndex = faker.number.int({ min: 0, max: collections.length - 1 });
@@ -55,7 +88,7 @@ const seed = async () => {
 		const createdProduct = await prisma.product.create({
 			data: {
 				name,
-				slug: faker.helpers.slugify(name).toLowerCase(),
+				slug,
 				description: faker.commerce.productDescription(),
 				price,
 				rating,
@@ -72,61 +105,45 @@ const seed = async () => {
 			},
 		});
 
-		products.push(createdProduct);
+		products.push(createdProduct as Product);
 		console.log(`Created product with id: ${createdProduct.id}`);
+	}
 
-		for (let j = 0; j < 3; j++) {
-			const createdImage = await prisma.productImage.create({
-				data: {
-					url: faker.image.urlLoremFlickr({ category: "fashion" }),
-					alt: faker.lorem.words(3),
-					width: 640,
-					height: 480,
-					productId: createdProduct.id,
-				},
-			});
-			console.log(`Created image with id: ${createdImage.id} for product id: ${createdProduct.id}`);
-		}
+	for (const product of products) {
+		const images = Array.from({ length: 3 }).map(() => ({
+			url: faker.image.urlLoremFlickr({ category: "cats" }),
+			alt: faker.lorem.words(3),
+			width: 640,
+			height: 480,
+			productId: product.id,
+		}));
+		await prisma.productImage.createMany({ data: images });
+		console.log(`Created ${images.length} images for product id: ${product.id}`);
 
-		for (let k = 0; k < 5; k++) {
-			const createdReview = await prisma.review.create({
-				data: {
-					author: faker.person.fullName(),
-					email: faker.internet.email(),
-					rating: faker.number.float({ min: 1, max: 5, fractionDigits: 1 }),
-					title: faker.lorem.words(3),
-					description: faker.lorem.paragraph(),
-					productId: createdProduct.id,
-				},
-			});
-			console.log(
-				`Created review with id: ${createdReview.id} for product id: ${createdProduct.id}`,
-			);
-		}
+		const reviews = Array.from({ length: 5 }).map(() => ({
+			author: faker.person.fullName(),
+			email: faker.internet.email(),
+			rating: faker.number.float({ min: 1, max: 5, fractionDigits: 1 }),
+			title: faker.lorem.words(3),
+			description: faker.lorem.paragraph(),
+			productId: product.id,
+		}));
+		await prisma.review.createMany({ data: reviews });
+		console.log(`Created ${reviews.length} reviews for product id: ${product.id}`);
 	}
 
 	for (let i = 0; i < 5; i++) {
-		const createdCart = await prisma.cart.create({
-			data: {},
-		});
-		console.log(`Created cart with id: ${createdCart.id}`);
-
-		for (let j = 0; j < 3; j++) {
+		const createdCart = await prisma.cart.create({ data: {} });
+		const cartItems = Array.from({ length: 3 }).map(() => {
 			const productIndex = faker.number.int({ min: 0, max: products.length - 1 });
-			const quantity = 1;
-
-			const createdCartItem = await prisma.cartItem.create({
-				data: {
-					productId: products[productIndex].id,
-					quantity,
-					cartId: createdCart.id,
-				},
-			});
-
-			console.log(
-				`Created cart item with id: ${createdCartItem.id} for cart id: ${createdCart.id} and product id: ${createdCartItem.productId}`,
-			);
-		}
+			return {
+				productId: products[productIndex].id,
+				quantity: 1,
+				cartId: createdCart.id,
+			};
+		});
+		await prisma.cartItem.createMany({ data: cartItems });
+		console.log(`Created ${cartItems.length} cart items for cart id: ${createdCart.id}`);
 	}
 
 	for (let i = 0; i < 5; i++) {
@@ -147,7 +164,6 @@ const seed = async () => {
 				totalAmount,
 			},
 		});
-
 		console.log(`Created order with id: ${createdOrder.id}`);
 	}
 };
