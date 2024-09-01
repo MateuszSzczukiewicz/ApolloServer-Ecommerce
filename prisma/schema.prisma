@@ -1,6 +1,7 @@
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 generator client {
@@ -76,11 +77,17 @@ model CartItem {
     cart      Cart    @relation(fields: [cartId], references: [id])
 }
 
+enum OrderStatus {
+    PENDING
+    COMPLETED
+    CANCELLED
+}
+
 model Order {
-    id          String   @id @default(cuid())
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    status      String
+    id          String      @id @default(cuid())
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    status      OrderStatus
     totalAmount Int
-    lines       String
+    lines       Json
 }
