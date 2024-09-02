@@ -1,5 +1,5 @@
-import { Order, QueryResolvers } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import { Order, QueryResolvers } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
 
 export const order: NonNullable<QueryResolvers["order"]> = async (_parent, { id }, _context) => {
 	const order = await prisma.order.findUnique({

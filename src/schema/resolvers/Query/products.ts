@@ -1,6 +1,6 @@
-import { ProductList, QueryResolvers } from "@/graphql/types.generated";
-import { prisma } from "@/db";
-import { SortOrder } from "@/types";
+import { ProductList, QueryResolvers } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
+import { SortOrder } from "../../../types";
 
 export const products: NonNullable<QueryResolvers["products"]> = async (
 	_parent,

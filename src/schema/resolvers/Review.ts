@@ -1,5 +1,5 @@
-import type { ReviewResolvers, Product } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import type { ReviewResolvers, Product } from "../../graphql/types.generated";
+import { prisma } from "../../db";
 
 export const Review: ReviewResolvers = {
 	product: async ({ productId }, _args, _context) => {

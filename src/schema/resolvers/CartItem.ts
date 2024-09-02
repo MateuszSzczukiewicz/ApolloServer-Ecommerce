@@ -1,5 +1,5 @@
-import type { CartItemResolvers, Product } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import type { CartItemResolvers, Product } from "../../graphql/types.generated";
+import { prisma } from "../../db";
 
 export const CartItem: CartItemResolvers = {
 	product: async ({ product: { id } }) => {

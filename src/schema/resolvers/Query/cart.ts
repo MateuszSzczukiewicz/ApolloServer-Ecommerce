@@ -1,5 +1,5 @@
-import { Cart, QueryResolvers } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import { Cart, QueryResolvers } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
 
 export const cart: NonNullable<QueryResolvers["cart"]> = async (_parent, { id }, _context) => {
 	if (!id) {

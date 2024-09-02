@@ -1,5 +1,5 @@
-import { Product, QueryResolvers } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import { Product, QueryResolvers } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
 
 export const product: NonNullable<QueryResolvers["product"]> = async (
 	_parent,

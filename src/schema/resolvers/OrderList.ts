@@ -1,4 +1,4 @@
-import type { OrderListResolvers } from "@/graphql/types.generated";
+import type { OrderListResolvers } from "../../graphql/types.generated";
 
 export const OrderList: OrderListResolvers = {
 	data: ({ data }) => data,

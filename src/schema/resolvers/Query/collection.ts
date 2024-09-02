@@ -1,5 +1,5 @@
-import { Collection, QueryResolvers } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import { Collection, QueryResolvers } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
 
 export const collection: NonNullable<QueryResolvers["collection"]> = async (
 	_parent,

@@ -1,5 +1,5 @@
-import type { CollectionResolvers, Product } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import type { CollectionResolvers, Product } from "../../graphql/types.generated";
+import { prisma } from "../../db";
 
 export const Collection: CollectionResolvers = {
 	products: async ({ id }, _args, _context) => {

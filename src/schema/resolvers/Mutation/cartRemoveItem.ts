@@ -1,5 +1,5 @@
-import { Cart, MutationResolvers, Product } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import { Cart, MutationResolvers, Product } from "../../../graphql/types.generated";
+import { prisma } from "../../../db";
 
 export const cartRemoveItem: NonNullable<MutationResolvers["cartRemoveItem"]> = async (
 	_parent,

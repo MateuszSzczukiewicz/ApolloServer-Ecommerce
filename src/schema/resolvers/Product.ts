@@ -4,8 +4,8 @@ import type {
 	ProductImage,
 	ProductResolvers,
 	Review,
-} from "@/graphql/types.generated";
-import { prisma } from "@/db";
+} from "../../graphql/types.generated";
+import { prisma } from "../../db";
 
 export const Product: ProductResolvers = {
 	collections: async ({ id }, _args, _context) => {

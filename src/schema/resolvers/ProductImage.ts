@@ -1,5 +1,5 @@
-import type { ProductImageResolvers, Product } from "@/graphql/types.generated";
-import { prisma } from "@/db";
+import type { ProductImageResolvers, Product } from "../../graphql/types.generated";
+import { prisma } from "../../db";
 
 export const ProductImage: ProductImageResolvers = {
 	product: async ({ productId }, _args, _context) => {
