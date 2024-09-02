@@ -30,6 +30,7 @@
 	"dependencies": {
 		"@apollo/server": "^4.11.0",
 		"@prisma/client": "^5.19.0",
+		"@vercel/node": "^3.2.10",
 		"graphql-scalars": "^1.23.0"
 	},
 	"type": "module"
