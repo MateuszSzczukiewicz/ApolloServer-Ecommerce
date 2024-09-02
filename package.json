@@ -21,6 +21,7 @@
 		"@eddeee888/gcg-typescript-resolver-files": "^0.10.4",
 		"@faker-js/faker": "^8.4.1",
 		"@graphql-codegen/cli": "^5.0.2",
+		"@types/node": "^22.5.2",
 		"graphql": "^16.9.0",
 		"prettier": "^3.3.3",
 		"prisma": "^5.19.0",
