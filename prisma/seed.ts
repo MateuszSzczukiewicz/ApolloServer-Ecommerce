@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { prisma } from "@/db";
 import { Product } from "@/graphql/types.generated";
+import { OrderStatus } from "@prisma/client";
 
 async function createUniqueNameAndSlug<T extends { name: string; slug: string }>(
 	generateName: () => string,
@@ -147,7 +148,11 @@ const seed = async () => {
 	}
 
 	for (let i = 0; i < 5; i++) {
-		const status = faker.helpers.arrayElement(["PENDING", "COMPLETED", "CANCELLED"]);
+		const status = faker.helpers.arrayElement([
+			OrderStatus.PENDING,
+			OrderStatus.COMPLETED,
+			OrderStatus.CANCELLED,
+		]);
 		const lines = JSON.stringify(
 			products.map((product) => ({
 				productId: product.id,

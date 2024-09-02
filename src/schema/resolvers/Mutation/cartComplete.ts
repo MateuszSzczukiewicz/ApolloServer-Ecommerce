@@ -41,7 +41,7 @@ export const cartComplete: NonNullable<MutationResolvers["cartComplete"]> = asyn
 
 	const orderWithParsedLines = {
 		...order,
-		lines: JSON.parse(order.lines) as Record<string, unknown>,
+		lines: order.lines as Record<string, unknown>,
 	};
 
 	await prisma.cart.delete({

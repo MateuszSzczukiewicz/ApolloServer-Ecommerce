@@ -9,7 +9,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 ) => {
 	const sortOrder: SortOrder = order.toLowerCase() as SortOrder;
 
-	const where = search
+	const where: Record<string, unknown> = search
 		? {
 				OR: [
 					{ name: { contains: search, mode: "insensitive" } },

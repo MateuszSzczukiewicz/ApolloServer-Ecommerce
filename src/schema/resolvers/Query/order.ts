@@ -12,6 +12,6 @@ export const order: NonNullable<QueryResolvers["order"]> = async (_parent, { id 
 
 	return {
 		...order,
-		lines: JSON.parse(order.lines),
+		lines: order.lines,
 	} as Order;
 };

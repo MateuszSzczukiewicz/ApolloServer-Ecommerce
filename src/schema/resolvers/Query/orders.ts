@@ -32,7 +32,7 @@ export const orders: NonNullable<QueryResolvers["orders"]> = async (
 	return {
 		data: orders.map((order) => ({
 			...order,
-			lines: JSON.parse(order.lines),
+			lines: order.lines,
 		})),
 		meta: {
 			count,
